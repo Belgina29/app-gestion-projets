@@ -1,4 +1,4 @@
-import express from "express";
+import express, {Request, Response } from "express";
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -10,8 +10,8 @@ const app = express();
 app.use(express.json());
 
 //routes
-app.get("/", (req, res) => {
-    res.send("Bienvenue sur l'API");
+app.get("/", (req: Request, res:Response) => {
+    res.status(200).send("Hello and welcome to the API");
 });
 
 export default app;
