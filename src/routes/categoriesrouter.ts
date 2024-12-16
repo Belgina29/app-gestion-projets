@@ -1,40 +1,14 @@
-import express from "express";
-import { PrismaClient } from "@prisma/client";
+import { Router } from "express";
+import {
+    getCategories,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+} from "../controllers/categoriesController";
 
-const prisma = new PrismaClient();
-const router = express.Router();
+export const router = Router();
 
-// CRUD pour les catégories
-
-router.post("/", async (req, res) => {
-  const { name } = req.body;
-  const category = await prisma.category.create({
-    data: { name },
-  });
-  res.json(category);
-});
-
-router.get("/", async (req, res) => {
-  const categories = await prisma.category.findMany();
-  res.json(categories);
-});
-
-router.put("/:id", async (req, res) => {
-  const { name } = req.body;
-  const { id } = req.params;
-  const category = await prisma.category.update({
-    where: { id: parseInt(id) },
-    data: { name },
-  });
-  res.json(category);
-});
-
-router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-  const category = await prisma.category.delete({
-    where: { id: parseInt(id) },
-  });
-  res.json(category);
-});
-
-export default router;
+router.get("/", getCategories); 
+router.post("/", createCategory); 
+router.put("/:id", updateCategory); 
+router.delete("/:id", deleteCategory);
